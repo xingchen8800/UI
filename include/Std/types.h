@@ -1,0 +1,143 @@
+#ifndef __TYPES_H_
+#define __TYPES_H_
+#define __USE_STDINT__
+/*
+    头文件:types.h
+    简介:定义基本的数据类型
+*/
+
+/*
+                      //         baseObject           //
+    xScreen.loop() -> xuiObject.paint(xPainter(xScreen)) -> xScreen.push();
+*/
+
+class Area;
+class Rectangle;
+class Coordinate;
+namespace xc::Std {
+    class String;
+}
+
+#ifdef __USE_STDINT__
+#include <stdint.h>
+#else
+//8位整型
+typedef unsigned char uint8_t;
+typedef unsigned char u8t;
+typedef char int8_t;
+typedef char i8t;
+
+//16位整型
+typedef unsigned short uint16_t;
+typedef unsigned short u16t;
+typedef short int16_t;
+typedef short i16t;
+
+//32位整型
+typedef unsigned long int uint32_t;
+typedef unsigned long int u32t;
+typedef long int int32_t;
+typedef long int i32t;
+
+//64位整型
+typedef unsigned long long int uint64_t;
+typedef unsigned long long int u64t;
+typedef long long int int64_t;
+typedef long long int i64t;
+#endif
+
+//颜色
+struct Colour {
+    uint16_t r, g, b;
+};
+
+//坐标
+class Coordinate {
+    friend Area;
+public:
+    //构造函数
+    Coordinate();
+    Coordinate(int64_t x, int64_t y);
+    Coordinate(const Coordinate&);
+
+    //析构
+    ~Coordinate();
+
+    //相对坐标和绝对坐标的转换
+    static Coordinate ToRelativeCoordinate(Coordinate &parent, Coordinate &child);
+    static Coordinate ToAbsoluteCoordinate(Coordinate &parent, Coordinate &child);
+
+    //移动
+    void MoveTo(int64_t x, int64_t y);
+    void MoveTo(Coordinate&);
+    void SetX(int64_t);
+    void SetY(int64_t);
+
+    //获取
+    int64_t GetX();
+    int64_t GetY();
+
+    //运算符
+    Coordinate& operator=(Coordinate& _right); //赋值
+    Coordinate operator-(Coordinate& _right);
+    Coordinate operator+(Coordinate& _right);
+    Coordinate& operator-=(Coordinate& _right);
+    Coordinate& operator+=(Coordinate& _right);
+    bool operator==(Coordinate& _right);
+
+private:
+    int64_t m_x, m_y;
+};
+
+//矩形
+class Rectangle {
+    friend Area;
+public:
+    //构造函数
+    Rectangle();
+    Rectangle(uint64_t width, uint64_t height);
+    Rectangle(const Rectangle&);
+
+    //析构函数
+    ~Rectangle();
+
+    //设置大小
+    void Resize(uint64_t width, uint64_t height);
+    void Resize(Rectangle&);
+    void SetWidth(uint64_t);
+    void SetHeight(uint64_t);
+
+    //获取
+    uint64_t GetWidth();
+    uint64_t GetHeight();
+    uint64_t GetSize();
+
+    //运算符
+    Rectangle& operator=(Rectangle& _right); 
+    bool operator>(Rectangle& _right);
+    bool operator<(Rectangle& _right);
+    bool operator>=(Rectangle& _right);
+    bool operator<=(Rectangle& _right);
+    bool operator==(Rectangle& _right);
+
+private:
+    uint64_t m_width, m_height;
+};
+
+//区域
+class Area : public Rectangle, public Coordinate {
+public:
+    Area();
+    Area(int64_t x, int64_t y, uint64_t w, uint64_t h);
+    Area(const Area&);
+
+    ~Area();
+
+    static bool IsOverlap(Area &a, Area &b);
+    
+    Area& operator=(Area& _right);
+    bool operator==(Area& _right);
+};
+
+
+#endif
