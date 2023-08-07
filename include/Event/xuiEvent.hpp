@@ -40,20 +40,29 @@ namespace xc {
             Coordinate m_coordinate;
         };
 
-        class xKeyPressEvent : public xEvent{
+        class xKeyPressEvent : public xEvent {
         public:
-            xKeyPressEvent(uint32_t keyValue);
+            typedef enum {
+                KeyPressDown,
+                KeyPressUp
+            } xKeyPressEventType;
+        public:
+            xKeyPressEvent(xKeyPressEventType type, uint32_t keyValue);
             ~xKeyPressEvent();
 
             const uint32_t& GetKeyValue();
+            const xKeyPressEventType& GetType() { return m_type; }
         private:
             uint32_t m_keyValue;
+            xKeyPressEventType m_type;
         };
         
         class xTouchEvent : public xEvent { 
+        public:
             typedef enum {
                 TouchStart,
-                TouchStop
+                TouchStop,
+                TouchMove
             } xTouchEventType;
         public:
             xTouchEvent(xTouchEventType type, Coordinate Coordinate);

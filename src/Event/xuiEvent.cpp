@@ -15,7 +15,7 @@ xPointerEvent::xPointerEventType& xPointerEvent::GetType() { return m_type; }
 Coordinate& xPointerEvent::GetCoordinate() { return m_coordinate; }
 
 //xKeyPressEvent
-xKeyPressEvent::xKeyPressEvent(uint32_t keyValue) : m_keyValue(keyValue), xEvent("keyPress") { } 
+xKeyPressEvent::xKeyPressEvent(xKeyPressEventType type, uint32_t keyValue) : m_type(type), m_keyValue(keyValue), xEvent("keyPress") { } 
 xKeyPressEvent::~xKeyPressEvent() { }
 
 const uint32_t& xKeyPressEvent::GetKeyValue() { return m_keyValue; }

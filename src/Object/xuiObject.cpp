@@ -2,7 +2,7 @@
 using namespace xc::ui;
 
 xuiObject::xuiObject(xuiObject* parent) 
-    : xBaseObject(parent) { 
+    : m_parent(parent) { 
     //注册事件
     RegisterCallBack("paint", PaintEvent);
     RegisterCallBack("pointer", PointerEvent);
@@ -11,7 +11,35 @@ xuiObject::xuiObject(xuiObject* parent)
     RegisterCallBack("getFocus", GetFocusEvent);
     RegisterCallBack("lostFocus", GetFocusEvent);
 }
-xuiObject::~xuiObject() { xBaseObject::~xBaseObject(); }
+
+xuiObject::~xuiObject() { 
+    if(m_parent != nullptr) {
+        int64_t index = m_parent->m_children.find(this);
+        if(index != -1) {
+            m_parent->m_children.deleteAt(index);
+        }
+    }
+    for(xuiObject* child : m_children) {
+        delete child;
+        child = nullptr;
+    }
+    if(!m_children.empty()) m_children.clear(); 
+}
+
+void xuiObject::SendEvent(xuiObject* obj, xEvent* event) {
+    obj->Notify(event);
+}
+void xuiObject::RegisterCallBack(String eventName, Std::Function<void(const char*)> cb) {
+    m_callbacks.insert(eventName, cb);
+}
+
+void xuiObject::Notify(xEvent* event) {
+    Std::Function<void(const char*)> find = m_callbacks.get(event->GetName());
+    try { find((const char*)event); }
+    catch(int error) {
+        event->Ignore();
+    }
+}
 
 void xuiObject::Resize(Rectangle rect) {
     m_area.Resize(rect);
@@ -42,7 +70,7 @@ void xuiObject::PaintEvent(const char* data) {
         return;
     }
     //再然后遍历除了m_focusObj[xBaseObject]的所有子对象，并给其发送paint事件
-    for(xBaseObject* child : m_children) {
+    for(xuiObject* child : m_children) {
         child->Notify(event);
     }
     event->Accept();                        //最后返回accept(成功)
@@ -50,7 +78,13 @@ void xuiObject::PaintEvent(const char* data) {
 
 void xuiObject::PointerEvent(const char* data) {
     xPointerEvent* event = (xPointerEvent*)data;
+    if(!m_accept_pointer_event) {
+        event->Ignore();
+        return;
+    }
     Coordinate& coordinate = event->GetCoordinate();
+    coordinate -= this->m_area.GetCoordinate();
+    
     switch (event->GetType()) {
     case xPointerEvent::PointerMove:
         onPointerMoveEvent(coordinate);
@@ -72,17 +106,65 @@ void xuiObject::PointerEvent(const char* data) {
         onPointerClickStopEvent(true);
         break;
     }
+
+    for(xuiObject* child : m_children) {
+        if(Area::IsPointInArea(child->m_area, coordinate)) {
+            child->Notify(event);
+        }                    
+    }
+
     event->Accept();
 }
 
 void xuiObject::TouchEvent(const char* data) {
     xTouchEvent* event = (xTouchEvent*)data;
-    onTouchEvent(event->GetCoordinate());
+    if(!m_accept_touch_event) {
+        event->Ignore();
+        return;
+    }
+    Coordinate& coordinate = event->GetCoordinate();
+    coordinate -= this->m_area.GetCoordinate();
+    
+    switch (event->GetType()) {
+    case xTouchEvent::TouchMove:
+        onTouchMoveEvent(coordinate);
+        break;
+
+    case xTouchEvent::TouchStart:
+        onTouchStartEvent(coordinate);
+        break;
+    
+    case xTouchEvent::TouchStop:
+        onTouchStopEvent(coordinate);
+        break;
+    }
+
+    for(xuiObject* child : m_children) {
+        if(Area::IsPointInArea(child->m_area, coordinate)) {
+            child->Notify(event);
+        }                    
+    }
+    event->Accept();
 }
 
 void xuiObject::KeyPressEvent(const char* data) {
     xKeyPressEvent* event = (xKeyPressEvent*)data;
-    onKeyPressEvent(event->GetKeyValue());
+    if(!m_accept_key_press_event) {
+        event->Ignore();
+        return;
+    }
+
+    switch (event->GetType()) {
+    case xKeyPressEvent::KeyPressDown:
+        onKeyPressDownEvent(event->GetKeyValue());
+        break;
+    
+    case xKeyPressEvent::KeyPressUp:
+        onKeyPressUpEvent(event->GetKeyValue());
+        break;
+    }    
+
+    event->Accept();
 }
 
 void xuiObject::GetFocusEvent(const char* data) {
@@ -116,3 +198,8 @@ void xuiObject::Disabled() { m_enabled = true; }
 
 void xuiObject::SetCanGetFocus() { m_can_get_focus = true; }
 void xuiObject::SetCantGetFocus() { m_can_get_focus = false; }
+
+
+void xuiObject::SetCanAcceptKeyPressEvent(bool x) { m_accept_key_press_event = x; }
+void xuiObject::SetCanAcceptTouchEvent(bool x) { m_accept_touch_event = x; }
+void xuiObject::SetCanAcceptPointerEvent(bool x) { m_accept_pointer_event = x; }

@@ -138,10 +138,13 @@ Area::Area(const Area& _right) {
 Area::~Area() { }
 
 bool Area::IsOverlap(Area &a, Area &b) {
-    if(a.m_x + a.m_width >= b.m_x && a.m_x <= b.m_x) {
+    if(a.m_x + a.m_width >= b.m_x && a.m_x <= b.m_x && a.m_y + a.m_height >= b.m_y && a.m_y <= b.m_y) {
         return true;
-    } 
-    if(a.m_y + a.m_height >= b.m_y && a.m_y <= b.m_y) {
+    }
+    return false;
+}
+bool Area::IsPointInArea(Area &a, Coordinate& point) {
+    if(point.GetX() >= a.GetX() && point.GetX() <= a.GetX() + a.GetWidth() && point.GetY() >= a.GetY() && point.GetY() <= a.GetY() + a.GetHeight()) {
         return true;
     }
     return false;

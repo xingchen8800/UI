@@ -134,6 +134,10 @@ public:
     ~Area();
 
     static bool IsOverlap(Area &a, Area &b);
+    static bool IsPointInArea(Area &a, Coordinate &point);
+
+    Coordinate& GetCoordinate() { return *this; }
+    Rectangle& GetRectangle() { return *this; }
     
     Area& operator=(Area& _right);
     bool operator==(Area& _right);
