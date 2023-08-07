@@ -22,13 +22,13 @@ xBaseObject::~xBaseObject() {
 void xBaseObject::SendEvent(xBaseObject* obj, xEvent* event) {
     obj->Notify(event);
 }
-void xBaseObject::RegisterCallBack(String eventName, Function<void(xEvent*)> cb) {
+void xBaseObject::RegisterCallBack(String eventName, Std::Function<void(const char*)> cb) {
     m_callbacks.insert(eventName, cb);
 }
 
 void xBaseObject::Notify(xEvent* event) {
-    Function<void(xEvent*)> find = m_callbacks.get(event->GetName());
-    try { find(event); event->Accept(); }
+    Std::Function<void(const char*)> find = m_callbacks.get(event->GetName());
+    try { find((const char*)event); }
     catch(int error) {
         event->Ignore();
     }

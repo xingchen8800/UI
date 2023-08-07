@@ -50,7 +50,7 @@ namespace xc {
             uint32_t m_keyValue;
         };
         
-        class xTouchEvent : public xEvent{
+        class xTouchEvent : public xEvent { 
             typedef enum {
                 TouchStart,
                 TouchStop
@@ -64,6 +64,16 @@ namespace xc {
         private:
             xTouchEventType m_type;
             Coordinate m_coordinate;
+        };
+
+        class xTimerEvent : public xEvent {
+        public:
+            xTimerEvent(uint64_t msec);
+            ~xTimerEvent();
+
+            const uint64_t& GetTime();
+        private:
+            uint64_t m_msec;
         };
     }
 }

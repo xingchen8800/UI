@@ -27,3 +27,8 @@ xTouchEvent::~xTouchEvent() { }
 xTouchEvent::xTouchEventType& xTouchEvent::GetType() { return m_type; }
 Coordinate& xTouchEvent::GetCoordinate() { return m_coordinate; }
 
+//xTimerEvent
+xTimerEvent::xTimerEvent(uint64_t msec) : m_msec(msec), xEvent("timer") { }
+xTimerEvent::~xTimerEvent() { }
+
+const uint64_t& xTimerEvent::GetTime() { return m_msec; }

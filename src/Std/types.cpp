@@ -36,8 +36,8 @@ void Coordinate::SetY(int64_t y) {
 }
 
 //获取
-int64_t Coordinate::GetX() { return m_x; }
-int64_t Coordinate::GetY() { return m_y; }
+const int64_t& Coordinate::GetX() { return m_x; }
+const int64_t& Coordinate::GetY() { return m_y; }
 
 //运算符
 Coordinate& Coordinate::operator=(Coordinate& _right) {
@@ -93,13 +93,13 @@ void Rectangle::SetHeight(uint64_t h) {
 }
 
 //获取
-uint64_t Rectangle::GetWidth() {
+const uint64_t& Rectangle::GetWidth() {
     return m_width;
 }
-uint64_t Rectangle::GetHeight() {
+const uint64_t& Rectangle::GetHeight() {
     return m_height;
 }
-uint64_t Rectangle::GetSize() {
+const uint64_t& Rectangle::GetSize() {
     return m_height * m_width;
 }
 

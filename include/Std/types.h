@@ -74,8 +74,8 @@ public:
     void SetY(int64_t);
 
     //获取
-    int64_t GetX();
-    int64_t GetY();
+    const int64_t& GetX();
+    const int64_t& GetY();
 
     //运算符
     Coordinate& operator=(Coordinate& _right); //赋值
@@ -108,9 +108,9 @@ public:
     void SetHeight(uint64_t);
 
     //获取
-    uint64_t GetWidth();
-    uint64_t GetHeight();
-    uint64_t GetSize();
+    const uint64_t& GetWidth();
+    const uint64_t& GetHeight();
+    const uint64_t& GetSize();
 
     //运算符
     Rectangle& operator=(Rectangle& _right); 
