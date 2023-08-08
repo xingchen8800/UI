@@ -27,37 +27,47 @@ namespace xc {
             void RegisterCallBack(String eventName, Std::Function<void(const char*)> cb); //注册事件：当事件(eventName)发生时，调用回调函数(cb)
 
             //有关显示区域的函数
-            void Resize(Rectangle rect);        //更改尺寸
-            void Move(Coordinate coordinate);   //更改坐标(相对于parent)
-            const Area& GetArea();              //获取区域信息(m_area[Area])
+            //更改尺寸
+            void Resize(Rectangle rect);  
+            //更改坐标(相对于parent)      
+            void Move(Coordinate coordinate);   
+            //获取区域信息(m_area[Area])
+            const Area& GetArea();              
 
             //Todo:
-            //void SetFont(xFont font, uint8_t size);
+            //void SetFont(xFont font);
             //xFont& GetFont();
-            //uint8_t GetFontSize();
-            //
-            //void SetContextMenu(xContextMenu* menu);
-            //xContextMenu* GetContextMenu();
             //
 
             //可视相关的函数(visible)
-            void Hidden();                  //隐藏
-            void Show();                    //显示
-            void SetVisible(bool visible);  //设置是(true)否(false)可视
-            const bool& GetVisible();       //获取是(true)否(false)可视
+            //隐藏
+            void Hidden();         
+            //显示         
+            void Show();   
+            //设置是(true)否(false)可视                 
+            void SetVisible(bool visible); 
+            //获取是(true)否(false)可视 
+            const bool& GetVisible();       
 
             //启用和停用
-            void Enabled();     //启用
-            void Disabled();    //停用
+            //启用
+            void Enabled();  
+            //停用   
+            void Disabled();    
 
             //设置是否可以获取焦点
-            void SetCanGetFocus();  //是
-            void SetCantGetFocus(); //否
+            //是
+            void SetCanGetFocus();  
+            //否
+            void SetCantGetFocus();
 
             //设置是否可以接受事件
-            void SetCanAcceptKeyPressEvent(bool);   //键盘
-            void SetCanAcceptTouchEvent(bool);      //触摸
-            void SetCanAcceptPointerEvent(bool);    //指针
+            //键盘
+            void SetCanAcceptKeyPressEvent(bool);   
+            //触摸
+            void SetCanAcceptTouchEvent(bool);    
+            //指针  
+            void SetCanAcceptPointerEvent(bool);    
 
             //获取
             xuiObject* GetParent();
@@ -104,9 +114,9 @@ namespace xc {
             //不可(不要)在类外更改的成员对象
             bool mhide_on_get_focus_event = false;
             bool mhide_on_lost_focus_event = false;
+
             //Todo:
             //xFont font;
-            //uint8_t font_size;
         };
     }
 }

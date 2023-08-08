@@ -9,7 +9,7 @@ inline void xPainter::DrawPixel(Coordinate point, Colour c)  {
     if(x > 0 || y > 0 || x > m_area.GetWidth() || y > m_area.GetHeight()) return;
     m_screen->DrawPixel(m_area.GetX() + x, m_area.GetY() + y, c);
 }
-inline void xPainter::DrawRectangle(Coordinate point, Rectangle rect, Colour c) {
+inline void xPainter::FillRectangle(Coordinate point, Rectangle rect, Colour c) {
     int64_t x = point.GetX(), y = point.GetY();
     for(int64_t i = x; i < x + rect.GetWidth(); i++) {
         for(int64_t j = y; j < y + rect.GetHeight(); j++) {
@@ -17,7 +17,7 @@ inline void xPainter::DrawRectangle(Coordinate point, Rectangle rect, Colour c) 
         }
     }
 }
-inline void xPainter::DrawRectangle(Area rectangle, Colour c) {
+inline void xPainter::FillRectangle(Area rectangle, Colour c) {
     int64_t x = rectangle.GetX(), y = rectangle.GetY();
     for(int64_t i = x; i < x + rectangle.GetWidth(); i++) {
         for(int64_t j = y; j < y + rectangle.GetHeight(); j++) {
