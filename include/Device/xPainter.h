@@ -22,9 +22,9 @@ namespace xc {
         inline void DrawRectangle(Coordinate point, Rectangle rect, Colour c);
         inline void DrawRectangle(Area rectangle, Colour c);
         inline void DrawCircle(Coordinate point, uint32_t r, Colour c);
-        inline void DrawLine(Coordinate point1, Coordinate point2, uint32_t lineWidth);
-        inline void DrawChar(Coordinate top_left, Rectangle size, char c, xFont font, Colour color, uint8_t font_size);
-        inline void DrawChar(Area area, char c, xFont font, Colour color, uint8_t font_size);
+        inline void DrawLine(Coordinate point1, Coordinate point2, Colour color);
+        inline void DrawChar(Coordinate top_left, Rectangle size, char c, ui::xFont font, Colour color, uint8_t font_size);
+        inline void DrawChar(Area area, char c, ui::xFont font, Colour color, uint8_t font_size);
 
         inline void SetArea(Area area) { m_area = area; }
     };

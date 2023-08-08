@@ -7,7 +7,7 @@
 #include "../Std/Map.hpp"
 #include "../Std/String.hpp"
 #include "../Std/Function.hpp"
-#include "../Device/xPainter.hpp"
+#include "../Device/xPainter.h"
 #include "../Event/xuiEvent.hpp"
 
 using namespace xc::Std;

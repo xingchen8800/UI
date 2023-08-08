@@ -1,6 +1,6 @@
 #ifndef __XUIEVENT_HPP_
 #define __XUIEVENT_HPP_
-#include "../Screen/xPainter.hpp"
+#include "../Device/xPainter.h"
 #include "xEvent.hpp"
 
 namespace xc {
