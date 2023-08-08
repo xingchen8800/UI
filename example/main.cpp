@@ -1,18 +1,22 @@
-#include "../include/Object/xBaseObject.h"
-#include <iostream>
-using namespace std;
+//在Visual Studio 2022 + easyx上编译
+
+#include "../include/Device/xScreen.h"
+#include "../include/Device/xPainter.h"
+#include <graphics.h>
 using namespace xc;
 
-//回调函数
-void onInput(xBaseObject* obj, const char* data) {
-    cout << "input:" << data << endl;
+xScreen *screen;
+
+void DrawPixel(uint64_t x, uint64_t y, Colour c) {
+    PutPixel(x, y, RGB(c.r, c.g, c.b));
 }
 
 int main() {
-    xBaseObject* obj1 = new xBaseObject(nullptr);   //创建一个空的xBaseObject
-    obj1->RegisterCallBack("input", onInput);       //注册input事件触发时的回调函数
-    string a;   
-    cin >> a;   //创建并输入字符串a
-    xBaseObject::SendEvent(obj1, "input", a.c_str());   //向obj1发送input事件
-    return 0;   
+    initgraph(640, 480);
+    screen = new xScreen(DrawPixel, Std::Rectangle(640, 480));
+    xPainter* painter = new xPainter(screen, Std::Area(640, 480));
+    painter->DrawLine(Std::Coordinate(0, 0), Std::Coordinate(100, 100));
+    screen->Push();
+    while (1);
+    closegraph();
 }

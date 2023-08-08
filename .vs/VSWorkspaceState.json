@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\include",
+    "\\include\\Device",
+    "\\include\\Event",
+    "\\include\\Object",
+    "\\include\\Std",
+    "\\include\\Widget",
+    "\\src",
+    "\\src\\Device",
+    "\\src\\Event"
+  ],
+  "SelectedNode": "\\include\\Device\\xScreen.h",
+  "PreviewInSolutionExplorer": false
+}

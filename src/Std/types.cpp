@@ -1,6 +1,8 @@
 #include "../../include/Std/types.h"
 #include "../../include/Std/String.hpp"
 
+using namespace xc::Std;
+
 Coordinate::Coordinate() { }
 Coordinate::Coordinate(int64_t x, int64_t y) : m_x(x), m_y(y) { }
 Coordinate::Coordinate(const Coordinate& _right) {
@@ -160,50 +162,55 @@ bool Area::operator==(Area& _right) {
            this->m_width == _right.m_width && this->m_height == _right.m_height;
 }
 
-namespace xc::Std::Maths {
-    //向下取整
-    float floorf(float x) { return (float)((int)x); }
-    double floor(double x) { return (double)((int)x); }
-    long double floorl(long double x) { return (double)((int)x); }
+namespace xc {
+    namespace Std {
+        namespace Maths {
+            //向下取整
+            float floorf(float x) { return (float)((int)x); }
+            double floor(double x) { return (double)((int)x); }
+            long double floorl(long double x) { return (double)((int)x); }
 
-    //绝对值
-    template<class num_t>
-    num_t abs(num_t x) {
-        if(x < 0) {
-            return 0 - x;
-        } else {
-            return x;
+            //绝对值
+            template<class num_t>
+            num_t abs(num_t x) {
+                if (x < 0) {
+                    return 0 - x;
+                }
+                else {
+                    return x;
+                }
+            }
+
+            //平方根
+            double sqrt(double x) {
+
+            }
+
+            //三角函数
+            double sin(double x) {
+                int i = 1, negation = 1;//取反
+                double sum;
+                double index = x;//指数
+                double Factorial = 1;//阶乘
+                double TaylorExpansion = x;//泰勒展开式求和
+                do
+                {
+                    Factorial = Factorial * ((int64_t)i + 1) * ((int64_t)i + 2);//求阶乘
+                    index *= x * x;//求num2的次方
+                    negation = -negation;//每次循环取反
+                    sum = index / Factorial * negation;
+                    TaylorExpansion += sum;
+                    i += 2;
+                } while (abs(sum) > 1e-15);
+                return TaylorExpansion;
+            }
+            double cos(double x) {
+                x = (PI / 2) - x;
+                return sin(x);
+            }
+            double tan(double x) {
+                return (sin(x) / cos(x));
+            }
         }
-    }
-
-    //平方根
-    double sqrt(double x) {
-
-    }
-
-    //三角函数
-    double sin(double x) {
-        int i = 1, negation = 1;//取反
-        double sum;
-        double index = x;//指数
-        double Factorial = 1;//阶乘
-        double TaylorExpansion = x;//泰勒展开式求和
-        do
-        {
-            Factorial = Factorial * ((int64_t)i + 1) * ((int64_t)i + 2);//求阶乘
-            index *= x * x;//求num2的次方
-            negation = -negation;//每次循环取反
-            sum = index / Factorial * negation;
-            TaylorExpansion += sum;
-            i += 2;
-        } while (abs(sum) > 1e-15);
-        return TaylorExpansion;
-    } 
-    double cos(double x) {
-        x = (PI / 2) - x;
-        return sin(x);
-    }
-    double tan(double x) {
-        return (sin(x) / cos(x));
     }
 }

@@ -1,5 +1,6 @@
 #include "../../include/Device/xScreen.h"
-#include "../../include/Device/xPainter.hpp"
+#include "../../include/Device/xPainter.h"
+#include "../../include/Event/xuiEvent.hpp"
 using namespace xc;
 
 xScreen::xScreen(DrawPixel_t func, Rectangle size) 
@@ -16,7 +17,10 @@ void xScreen::DrawPixel(uint64_t x, uint64_t y, Colour c) {
 int16_t xScreen::loop(ui::xuiObject* baseObj) {
     uint64_t w = m_size.GetWidth(), h = m_size.GetHeight();
     m_painter->SetArea(Area(0, 0, w, h));
-    baseObj->Paint(m_painter);
+
+    ui::xPaintEvent* paintEvent = new ui::xPaintEvent(m_painter);
+    baseObj->Notify(paintEvent);
+
     Push();
 
     return loop(baseObj);

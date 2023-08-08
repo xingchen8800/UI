@@ -5,8 +5,10 @@
 #include "../Std/String.hpp"
 #include "xScreen.h"
 
-namespace xc::ui {
-    class xFont;
+namespace xc {
+    namespace ui {
+        class xFont;
+    }
 }
 
 namespace xc {

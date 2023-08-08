@@ -15,8 +15,8 @@ namespace xc {
         void DrawPixel(uint64_t x, uint64_t y, Colour c);
 
         int16_t loop(ui::xuiObject* baseObj);
-    private:
         void Push();
+    private:
 
         Colour *m_buffer;
         Rectangle m_size;

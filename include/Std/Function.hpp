@@ -3,7 +3,8 @@
 
 //Code by GPT-4
 
-namespace xc::Std {
+namespace xc {
+    namespace Std {
     template<typename T>
     class UniquePtr {
         T* ptr;
@@ -102,7 +103,7 @@ namespace xc::Std {
             return (*_base)(args...);
         }
     };
-
+    }
 }
 
 #endif

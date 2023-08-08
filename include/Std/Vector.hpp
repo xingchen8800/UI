@@ -4,7 +4,8 @@
 
 //Code by GPT-4
 
-namespace xc::Std {
+namespace xc {
+    namespace Std {
     template<typename T>
     class Vector {
     private:
@@ -98,6 +99,7 @@ namespace xc::Std {
             return arr + current;
         }
     };
+    }
 }
 
 #endif
