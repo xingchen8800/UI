@@ -1,5 +1,5 @@
-#include "../../include/Screen/xScreen.h"
-#include "../../include/Screen/xPainter.hpp"
+#include "../../include/Device/xScreen.h"
+#include "../../include/Device/xPainter.hpp"
 using namespace xc;
 
 xScreen::xScreen(DrawPixel_t func, Rectangle size) 

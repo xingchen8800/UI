@@ -18,6 +18,7 @@ namespace xc::Std {
     class String;
 }
 
+
 #ifdef __USE_STDINT__
 #include <stdint.h>
 #else
@@ -45,6 +46,22 @@ typedef unsigned long long int u64t;
 typedef long long int int64_t;
 typedef long long int i64t;
 #endif
+
+//函数
+//数学
+namespace xc::Std::Maths {
+    constexpr double PI = 3.1415926;
+    float floorf(float x);
+    double floor(double x);
+    long double floorl(long double x);
+    template<class num_t>
+    num_t abs(num_t x);
+    double sqrt(double x);
+    
+    double sin(double x);
+    double cos(double x);
+    double tan(double x);
+}
 
 //颜色
 struct Colour {

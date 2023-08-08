@@ -1,8 +1,9 @@
-#include "xuiObject.h"
+#include "../../include/Object/xuiObject.h"
 using namespace xc::ui;
 
 xuiObject::xuiObject(xuiObject* parent) 
-    : m_parent(parent) { 
+    : m_parent(parent) {    
+    if(m_parent != nullptr) m_parent->m_children.push(this);
     //注册事件
     RegisterCallBack("paint", PaintEvent);
     RegisterCallBack("pointer", PointerEvent);
@@ -172,6 +173,7 @@ void xuiObject::GetFocusEvent(const char* data) {
     if(m_can_get_focus) {
         event->Accept();
         mhide_on_get_focus_event = true;
+        m_focused = true;
     } else {
         event->Ignore();
     }
@@ -185,6 +187,7 @@ void xuiObject::LostFocusEvent(const char* data) {
     }
     event->Accept();
     mhide_on_lost_focus_event = true;
+    m_focused = false;
 }
 
 
@@ -199,6 +202,7 @@ void xuiObject::Disabled() { m_enabled = true; }
 void xuiObject::SetCanGetFocus() { m_can_get_focus = true; }
 void xuiObject::SetCantGetFocus() { m_can_get_focus = false; }
 
+xuiObject* xuiObject::GetParent() { return m_parent; }
 
 void xuiObject::SetCanAcceptKeyPressEvent(bool x) { m_accept_key_press_event = x; }
 void xuiObject::SetCanAcceptTouchEvent(bool x) { m_accept_touch_event = x; }

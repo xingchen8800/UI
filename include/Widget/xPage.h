@@ -11,7 +11,7 @@ namespace xc {
             //构造+析构
             xPage(xuiObject* parent);
             ~xPage();
-        }
+        };
     }
 }
 

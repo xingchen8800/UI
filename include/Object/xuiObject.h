@@ -7,7 +7,7 @@
 #include "../Std/Map.hpp"
 #include "../Std/String.hpp"
 #include "../Std/Function.hpp"
-#include "../Screen/xPainter.hpp"
+#include "../Device/xPainter.hpp"
 #include "../Event/xuiEvent.hpp"
 
 using namespace xc::Std;
@@ -59,6 +59,9 @@ namespace xc {
             void SetCanAcceptTouchEvent(bool);      //触摸
             void SetCanAcceptPointerEvent(bool);    //指针
 
+            //获取
+            xuiObject* GetParent();
+        protected:
             //[虚函数]事件的第二次处理
             virtual void onPaintEvent(xPainter* painter) = 0;   
             virtual void onPointerMoveEvent(Coordinate coordinate) = 0;
