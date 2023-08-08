@@ -59,7 +59,7 @@ inline void xPainter::DrawLine(Coordinate point1, Coordinate point2, Colour colo
 	double xinc, yinc, x, y;
 	dx = x2 - x1;
 	dy = y2 - y1;
-	if(Std::Maths::abs(dx)-Std::Maths::abs(dy)>0) //比较两参数的绝对值哪一个大，哪一个就作为步长参数（n），
+	if(Std::Maths::abs(dx) - Std::Maths::abs(dy)>0) //比较两参数的绝对值哪一个大，哪一个就作为步长参数（n），
 						  //此参数将作为沿直线所画出点的数目
 		n = Std::Maths::abs(dx);
 	else
