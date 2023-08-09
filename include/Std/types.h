@@ -75,7 +75,7 @@ namespace xc {
 namespace xc {
     namespace Std {
         //颜色
-        struct Colour {
+        struct Color {
             uint16_t r, g, b;
         };
 
@@ -157,6 +157,8 @@ namespace xc {
         public:
             Area();
             Area(int64_t x, int64_t y, uint64_t w, uint64_t h);
+            Area(Coordinate& c, Rectangle& r);
+            Area(Coordinate c, Rectangle r);
             Area(const Area&);
 
             ~Area();

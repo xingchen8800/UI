@@ -14,7 +14,7 @@ using namespace xc::Std;
 
 namespace xc {
     namespace ui {
-        //xuiObject 适用于GUI的xBaseObject类
+        //xuiObject 适用于GUI的xObject类
         class xuiObject {
             friend xScreen; //可以让xScreen(屏幕类)访问本类中的private(私有)内容(指各个事件函数)
         public:
@@ -69,21 +69,32 @@ namespace xc {
             //指针  
             void SetCanAcceptPointerEvent(bool);    
 
+            //设置是否在设置属性时更新子对象的相同属性
+            void SetChangeChildrensAttributeOnSetAttribute(bool);
+
             //获取
             xuiObject* GetParent();
+            int64_t GetRealX();
+            int64_t GetRealY();
+            Coordinate GetRealCoordinate();
+            Area GetRealArea();
+            Rectangle GetRectangle();
+
+            void SetAttribute(String attributeName, const char* attributeData);
+            const char* GetAttribute(String attributeName);
         protected:
             //[虚函数]事件的第二次处理
-            virtual void onPaintEvent(xPainter* painter) = 0;   
-            virtual void onPointerMoveEvent(Coordinate coordinate) = 0;
-            virtual void onPointerClickStartEvent(bool button) = 0;
-            virtual void onPointerClickStopEvent(bool button) = 0;
-            virtual void onTouchMoveEvent(Coordinate coordiante) = 0;
-            virtual void onTouchStartEvent(Coordinate coordinate) = 0;
-            virtual void onTouchStopEvent(Coordinate coordinate) = 0;
-            virtual void onKeyPressDownEvent(uint32_t keyValue) = 0;
-            virtual void onKeyPressUpEvent(uint32_t keyValue) = 0;
-            virtual void onGetFocusEvent(xPainter* painter) = 0;
-            virtual void onLostFocusEvent(xPainter* painter) = 0;
+            virtual void onPaintEvent(xPainter* painter);  
+            virtual void onPointerMoveEvent(Coordinate coordinate);
+            virtual void onPointerClickStartEvent(bool button);
+            virtual void onPointerClickStopEvent(bool button);
+            virtual void onTouchMoveEvent(Coordinate coordiante);
+            virtual void onTouchStartEvent(Coordinate coordinate);
+            virtual void onTouchStopEvent(Coordinate coordinate);
+            virtual void onKeyPressDownEvent(uint32_t keyValue);
+            virtual void onKeyPressUpEvent(uint32_t keyValue);
+            virtual void onGetFocusEvent(xPainter* painter);
+            virtual void onLostFocusEvent(xPainter* painter);
         private:
             //事件的第一次处理
             void PaintEvent(const char* data); //xPaintEvent
@@ -101,7 +112,8 @@ namespace xc {
             bool m_focused = false;                                         //当前是(true)否(false)被聚焦[bool]
             xuiObject* m_parent;                                            //父对象[xuiObject*]
             Vector<xuiObject*> m_children;                                  //子对象[Vector<xuiObjet*>]
-            Map<String, Std::Function<void(const char*)> > m_callbacks;     //回调函数[Map<String, Function<void(const char*)> >]
+            Map<String, Std::Function<void(const char*)> > m_callbacks;     //回调函数[Map<String, Function<void(const char*)> >]                     //
+            Map<String, const char*> m_attributes;                          //属性[Map<String, const char*>]
 
             //配置型选项
             bool m_visible = true;                  //当前是(true)否(false)可视[bool]
@@ -110,6 +122,7 @@ namespace xc {
             bool m_accept_key_press_event = true;   //是(true)否(false)可以接受键盘事件[bool]
             bool m_accept_touch_event = true;       //是(true)否(false)可以接受触摸事件[bool]
             bool m_accept_pointer_event = true;     //是(true)否(false)可以接受指针事件[bool]
+            bool m_change_childrens_attribute_on_set_attribute = true; //是(true)否(false)在设置属性的时候为子对象设置同样的属性[bool]
 
             //不可(不要)在类外更改的成员对象
             bool mhide_on_get_focus_event = false;

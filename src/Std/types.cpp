@@ -136,6 +136,8 @@ Area::Area(const Area& _right) {
     this->m_width = _right.m_width;
     this->m_height = _right.m_height;
 }
+Area::Area(Coordinate& c, Rectangle& r) : Coordinate(c), Rectangle(r) { }
+Area::Area(Coordinate c, Rectangle r) : Coordinate(c), Rectangle(r) { }
 
 Area::~Area() { }
 

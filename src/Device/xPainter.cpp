@@ -4,20 +4,20 @@ using namespace xc;
 xPainter::xPainter(xScreen* screen, Area area) : m_screen(screen), m_area(area) { }
 xPainter::~xPainter() { m_screen = nullptr; }
 
-inline void xPainter::DrawPixel(Coordinate point, Colour c)  {
+inline void xPainter::DrawPixel(Coordinate point, Color c)  {
     int64_t x = point.GetX(), y = point.GetY();
-    if(x > 0 || y > 0 || x > m_area.GetWidth() || y > m_area.GetHeight()) return;
+    if(x < 0 || y < 0 || x > m_area.GetWidth() || y > m_area.GetHeight()) return;
     m_screen->DrawPixel(m_area.GetX() + x, m_area.GetY() + y, c);
 }
-inline void xPainter::FillRectangle(Coordinate point, Rectangle rect, Colour c) {
-    int64_t x = point.GetX(), y = point.GetY();
+inline void xPainter::FillRectangle(Coordinate point, Rectangle rect, Color c) {
+    int64_t x = point.GetX() + m_area.GetX(), y = point.GetY() + m_area.GetX();
     for(int64_t i = x; i < x + rect.GetWidth(); i++) {
         for(int64_t j = y; j < y + rect.GetHeight(); j++) {
             DrawPixel(Coordinate(i, j), c);
         }
     }
 }
-inline void xPainter::FillRectangle(Area rectangle, Colour c) {
+inline void xPainter::FillRectangle(Area rectangle, Color c) {
     int64_t x = rectangle.GetX(), y = rectangle.GetY();
     for(int64_t i = x; i < x + rectangle.GetWidth(); i++) {
         for(int64_t j = y; j < y + rectangle.GetHeight(); j++) {
@@ -25,7 +25,7 @@ inline void xPainter::FillRectangle(Area rectangle, Colour c) {
         }
     }
 }
-inline void xPainter::DrawCircle(Coordinate point, uint32_t r, Colour c) {
+inline void xPainter::DrawCircle(Coordinate point, uint32_t r, Color c) {
     int x = 0; 
     int y = r;
     int x0 = point.GetX(), y0 = point.GetY(); 
@@ -52,7 +52,7 @@ inline void xPainter::DrawCircle(Coordinate point, uint32_t r, Colour c) {
         --y; 
     } 
 }
-inline void xPainter::DrawLine(Coordinate point1, Coordinate point2, Colour color) {
+inline void xPainter::DrawLine(Coordinate point1, Coordinate point2, Color color) {
     int64_t x1 = point1.GetX(), y1 = point1.GetY();
     int64_t x2 = point2.GetY(), y2 = point2.GetY();
     int dx, dy, n, k;

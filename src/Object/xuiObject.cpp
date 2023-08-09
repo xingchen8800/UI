@@ -55,7 +55,7 @@ const Area& xuiObject::GetArea() {
 void xuiObject::PaintEvent(const char* data) {
     xPaintEvent* event = (xPaintEvent*)data;    //获取event[xPaintEvent*]
     xPainter* painter = event->GetPainter();    //获取painter[xPainter*]
-    painter->SetArea(m_area);                   //先更改可以绘图的区域(this->m_area[Area])
+    painter->SetArea(GetArea());                   //先更改可以绘图的区域(this->m_area[Area])
     if(mhide_on_get_focus_event) {              //再判断是否有getFocus或lostFocus的临时事件
         this->onGetFocusEvent(painter);
         mhide_on_get_focus_event = false;
@@ -127,17 +127,9 @@ void xuiObject::TouchEvent(const char* data) {
     coordinate -= this->m_area.GetCoordinate();
     
     switch (event->GetType()) {
-    case xTouchEvent::TouchMove:
-        onTouchMoveEvent(coordinate);
-        break;
-
-    case xTouchEvent::TouchStart:
-        onTouchStartEvent(coordinate);
-        break;
-    
-    case xTouchEvent::TouchStop:
-        onTouchStopEvent(coordinate);
-        break;
+        case xTouchEvent::TouchMove: onTouchMoveEvent(coordinate); break;
+        case xTouchEvent::TouchStart: onTouchStartEvent(coordinate); break;
+        case xTouchEvent::TouchStop: onTouchStopEvent(coordinate); break;
     }
 
     for(xuiObject* child : m_children) {
@@ -207,3 +199,51 @@ xuiObject* xuiObject::GetParent() { return m_parent; }
 void xuiObject::SetCanAcceptKeyPressEvent(bool x) { m_accept_key_press_event = x; }
 void xuiObject::SetCanAcceptTouchEvent(bool x) { m_accept_touch_event = x; }
 void xuiObject::SetCanAcceptPointerEvent(bool x) { m_accept_pointer_event = x; }
+
+void xuiObject::SetChangeChildrensAttributeOnSetAttribute(bool x) { m_change_childrens_attribute_on_set_attribute = x; }
+
+void xuiObject::onPaintEvent(xPainter* painter) { }
+void xuiObject::onPointerMoveEvent(Coordinate coordinate) { }
+void xuiObject::onPointerClickStartEvent(bool button) { }
+void xuiObject::onPointerClickStopEvent(bool button) { }
+void xuiObject::onTouchMoveEvent(Coordinate coordiante) { }
+void xuiObject::onTouchStartEvent(Coordinate coordinate) { }
+void xuiObject::onTouchStopEvent(Coordinate coordinate) { }
+void xuiObject::onKeyPressDownEvent(uint32_t keyValue) { }
+void xuiObject::onKeyPressUpEvent(uint32_t keyValue) { }
+void xuiObject::onGetFocusEvent(xPainter* painter) { }
+void xuiObject::onLostFocusEvent(xPainter* painter) { }
+
+int64_t xuiObject::GetRealX() {
+    if(m_parent != nullptr) return m_area.GetX() + m_parent->GetRealX();
+    else return m_area.GetX(); 
+}
+int64_t xuiObject::GetRealY() {
+    if(m_parent != nullptr) return m_area.GetY() + m_parent->GetRealY();
+    else return m_area.GetX(); 
+}
+Coordinate xuiObject::GetRealCoordinate() {
+    return Coordinate(GetRealX(), GetRealY());
+}
+Area xuiObject::GetRealArea() {
+    return Area(GetRealX(), GetRealY(), m_area.GetWidth(), m_area.GetHeight());
+}
+Rectangle xuiObject::GetRectangle() { return m_area.GetRectangle(); }
+
+void xuiObject::SetAttribute(String attributeName, const char* attributeData) {
+    m_attributes.insert(attributeName, attributeData);
+    if(m_change_childrens_attribute_on_set_attribute) {
+        for(xuiObject* child : m_children) {
+            child->SetAttribute(attributeName, attributeData);
+        }
+    }
+}
+const char* xuiObject::GetAttribute(String attributeName) { 
+    try {
+        const char* data = m_attributes.get(attributeName);
+        return data;
+    } catch (int error) {
+        return "\0";
+    }
+
+}

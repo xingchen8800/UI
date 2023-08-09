@@ -11,6 +11,12 @@ namespace xc {
             //构造+析构
             xPage(xuiObject* parent);
             ~xPage();
+
+            void SetBackgroundColor(Color c);
+            Color* GetBackgroundColor();
+
+            //[virtual]xEvent处理函数
+            virtual void onPaintEvent(xPainter* painter);
         };
     }
 }
