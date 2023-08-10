@@ -7,8 +7,9 @@
 English | [简体中文](./README.md)
 
 </div>
-✨Overview
-This is a cross-platform UI library, written in pure C++, _without using the std library_. You only need to provide a function for outputting pixels void(uint64t, uint64_t, Color)] and a function for input devices const char()] to use it on the device.
+
+## ✨Overview
+This is a cross-platform UI library, written in __pure C++__ ,  __without using the std library__ . You only need to provide a function for outputting pixels[void(uint64t, uint64_t, Color)] and a function for input devices[const char()] to use it on the device.
 ### Implementation Logic of xcUI
 <img src="xcUI.png" alt="Flowchart of xcUI operation (apologies for the poor diagram)"/>
 The main structure of xcUI is as shown in the figure above: in a loop, it continuously calls the function to get input device information, then processes the received data into xEvent objects that are easy for xuiObject to use, then sends a paint event to the bottommost xuiObject object, and finally pushes the screen that has received all drawing information to the output device.
