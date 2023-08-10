@@ -2,6 +2,7 @@
 <h1 align="center">xcUI - 跨平台的UI库</h1>
 
 <h2 align="center">⚠⚠本项目使用GNU3.0许可证，请遵守许可内容，否则后果自负⚠⚠</h2>
+
 [English](./README.en.md) | 简体中文
 
 ## ✨概述
