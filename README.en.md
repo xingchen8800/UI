@@ -1,8 +1,12 @@
 
 <h1 align="center">xcUI - Cross-platform UI Library</h1>
 
-<h2 align="center">⚠⚠ This project uses the GNU3.0 license. Please comply with the license content, otherwise you bear the consequences ⚠⚠</h2>
-English | Simplified Chinese
+<div align="center">
+<h2>⚠⚠ This project uses the GNU3.0 license. Please comply with the license content, otherwise you bear the consequences ⚠⚠</h2>
+
+English | [简体中文](./README.md)
+
+</div>
 ✨Overview
 This is a cross-platform UI library, written in pure C++, _without using the std library_. You only need to provide a function for outputting pixels void(uint64t, uint64_t, Color)] and a function for input devices const char()] to use it on the device.
 ### Implementation Logic of xcUI
