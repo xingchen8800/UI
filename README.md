@@ -1,18 +1,8 @@
 
 <h1 align="center">xcUI - 跨平台的UI库</h1>
 
-<div align="center">
-![Release Download](https://img.shields.io/github/downloads/xingchen/UI/total?style=flat-square)
-[![Release Version](https://img.shields.io/github/v/release/xingchen/UI?style=flat-square)](https://github.com/xingchen/UI/releases/latest)
-[![GitHub license](https://img.shields.io/github/license/xingchen/UI?style=flat-square)](LICENSE)
-[![GitHub Star](https://img.shields.io/github/stars/xingchen/UI?style=flat-square)](https://github.com/xingchen/UI/stargazers)
-[![GitHub Fork](https://img.shields.io/github/forks/xingchen/UI?style=flat-square)](https://github.com/xingchen/UI/network/members)
-![GitHub Repo size](https://img.shields.io/github/repo-size/xingchen/UI?style=flat-square&color=3cb371)
-[![GitHub Repo Languages](https://img.shields.io/github/languages/top/xingchen/UI?style=flat-square)](https://github.com/xingchen/UI/search?l=c%23)
-</div>
-
+<h1 align="center">⚠⚠⚠本项目使用GNU3.0许可证，请遵守许可内容，否则后果自负⚠⚠⚠ </h1>
 ## ✨概述
-⚠⚠⚠ ___本项目使用GNU3.0许可证，请遵守许可内容，否则后果自负___ ⚠⚠⚠
 
 这是一个跨平台的UI库，使用 __纯C++__ 编写， __没有使用std库__ 。你只需要提供输出像素的函数[void(uint64_t, uint64_t, Color)]和输入设备的函数[const char*()]就可以在设备上使用了。
 ### xcUI的实现逻辑
